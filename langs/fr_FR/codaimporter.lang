@@ -1,0 +1,57 @@
+# Copyright (C) 2020 Laudeco
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Générique
+#
+
+# Module label 'ModuleCodaimporterName'
+ModuleCodaimporterName = Coda importer
+# Module description 'ModuleCodaimporterDesc'
+ModuleCodaimporterDesc = Importe des fichiers CODA dans Dolibarr
+ModuleCodaimporterDescLong = Importe des fichiers CODA dans Dolibarr. Ces fichiers vont solder les factures (fournisseur/Client), notes de frais.
+
+#
+# Page d'administration
+#
+CodaimporterSetup = Configuration du module Codaimporter
+Settings = Réglages
+CodaimporterSetupPage = Page de configuration du module Codaimporter
+
+#
+# Page À propos
+#
+About = À propos
+CodaimporterAbout = À propos de Codaimporter
+CodaimporterAboutPage = Page à propos de Codaimporter
+
+#
+# Steps
+#
+codaimportImportTitle=Import de CODA
+codaimporterintroduction = Veuillez renseigner le fichier CODA à importer.
+codaimportColSequence=Séquence
+codaimportColThirdParty=Tiers
+codaimportColAmount=Montant (€)
+codaimportColMessage=Message
+codaimportColStrucCommunication=Communication structurée
+codeimportNoMatching=Pas de correspondance trouvée
+
+
+#
+# Box d'exemple
+#
+MyWidget = Mon widget
+MyWidgetDescription = Description de mon widget

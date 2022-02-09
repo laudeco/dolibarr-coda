@@ -1,0 +1,23 @@
+<?php
+/**
+ * @var \CodaImporter\Http\Web\Form\ImportForm $codaForm
+ */
+
+use CodaImporter\Infrastructure\Common\Form\SimpleFormRenderer;
+
+global $langs;
+$renderer = new SimpleFormRenderer();
+
+?>
+
+<?php print load_fiche_titre($langs->trans("codaimportImportTitle"). ' (1/3)'); ?>
+
+<form enctype='multipart/form-data' name="import" method="POST" action="?r=importStepOne">
+
+    <p> <?php echo $langs->trans("codaimporterintroduction"); ?></p>
+
+    <?php echo $renderer->render($codaForm->getElement('coda')); ?>
+    <?php echo $renderer->render($codaForm->getElement('token')); ?>
+
+    <button type="submit">Envoyer</button>
+<?php echo $renderer->closingForm(); ?>

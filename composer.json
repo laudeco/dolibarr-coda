@@ -1,0 +1,22 @@
+{
+    "name": "laudeco/codaimporter",
+    "description": "Dolibarr module to import CODA files",
+    "authors": [
+        {
+            "name": "Laurent De Coninck",
+            "email": "lau.deconinck@gmail.com"
+        }
+    ],
+    "require": {
+        "codelicious/php-coda-parser": "^2.2",
+        "symfony/routing": "^5.4",
+        "symfony/http-kernel": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodaImporter\\Application\\": "./Application",
+            "CodaImporter\\Http\\": "./Http",
+            "CodaImporter\\Infrastructure\\": "./Infrastructure"
+        }
+    }
+}

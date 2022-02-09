@@ -1,0 +1,59 @@
+<?php
+/**
+ * @var \CodaImporter\Http\Web\Form\ImportForm $codaForm
+ * @var \Codelicious\Coda\Statements\Statement[] $statements
+ */
+
+use CodaImporter\Infrastructure\Common\Form\SimpleFormRenderer;
+
+global $langs;
+
+$renderer = new SimpleFormRenderer();
+
+/**
+ * @var \Codelicious\Coda\Statements\Statement[] $statements
+ * @var \CodaImporter\Infrastructure\Common\Form\FormInterface $codaForm
+ */
+?>
+
+<?php print load_fiche_titre($langs->trans("codaimportImportTitle"). ' (2/3)'); ?>
+
+    <form name="import" method="POST" action="?r=importStepTwo">
+
+        <?php echo $renderer->render($codaForm->getElement('coda')); ?>
+        <?php echo $renderer->render($codaForm->getElement('token')); ?>
+
+
+        <table class="noborder centpercent">
+            <thead>
+            <tr class="liste_titre">
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColSequence'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColThirdParty'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColAmount'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColMessage'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColStrucCommunication'); ?></th>
+                <th class="liste_titre">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \CodaImporter\Application\Coda\ViewModel\Statements $statements */
+            foreach ($statements->transactions() as $transaction): ?>
+                <tr>
+                    <td><?php echo $transaction->getStatementSequence(); ?>/<?php echo $transaction->getTransactionSequence(); ?></td>
+                    <td><?php echo $transaction->getAccount()->getName(); ?>
+                        (<?php echo $transaction->getAccount()->getNumber(); ?> - <?php echo $transaction->getAccount()->getBic(); ?>)
+                        <br/>
+                        <?php echo $transaction->getSepaDirectDebit() ? $transaction->getSepaDirectDebit()->getMandateReference() : ''; ?>
+                    </td>
+
+                    <td><?php echo $transaction->getAmount(); ?> &euro; </td>
+                    <td><?php echo $transaction->getMessage(); ?></td>
+                    <td><?php echo $transaction->getStructuredMessage(); ?></td>
+                    <td><input type="checkbox" value="<?php echo $transaction->getTransactionSequence(); ?>" name="transactions[]"></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    <input type="submit"/>
+<?php echo $renderer->closingForm(); ?>

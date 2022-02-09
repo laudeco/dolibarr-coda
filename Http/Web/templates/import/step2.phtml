@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @var \CodaImporter\Application\Coda\ViewModel\MatchResult[] $matches
+ * @var string $coda
+ */
+
+use CodaImporter\Infrastructure\Common\Form\SimpleFormRenderer;
+
+global $langs;
+
+$renderer = new SimpleFormRenderer();
+
+?>
+<?php print load_fiche_titre($langs->trans("codaimportImportTitle"). ' (3/3)'); ?>
+    <form name="import" method="POST" action="?r=importStepThree">
+
+        <input type="hidden" name="coda" value="<?php echo $coda; ?>" >
+        <input type="hidden" name="token" value="<?php echo newToken(); ?>" >
+
+        <table class="noborder centpercent">
+            <thead>
+            <tr class="liste_titre">
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColSequence'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColThirdParty'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColAmount'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColMessage'); ?></th>
+                <th class="liste_titre"><?php echo $langs->trans('codaimportColStrucCommunication'); ?></th>
+                <th class="liste_titre">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($matches as $match): ?>
+                <?php $transaction = $match->transaction(); ?>
+                    <tr>
+                        <td><?php echo $transaction->getStatementSequence(); ?>
+                            /<?php echo $transaction->getTransactionSequence(); ?></td>
+                        <td><?php echo $transaction->getAccount()->getName(); ?>
+                            (<?php echo $transaction->getAccount()->getNumber(); ?> - <?php echo $transaction->getAccount()->getBic(); ?>)
+                            <br/>
+                            <?php echo $transaction->getSepaDirectDebit() ? $transaction->getSepaDirectDebit()->getMandateReference() : ''; ?>
+                        </td>
+
+                        <td><?php echo $transaction->getAmount(); ?>&euro;</td>
+                        <td><?php echo $transaction->getMessage(); ?></td>
+                        <td><?php echo $transaction->getStructuredMessage(); ?></td>
+                        <td>
+                            <?php if($match->hasMatch()): ?>
+
+
+                            <select name="matching[<?php echo $transaction->getStatementSequence(); ?>_<?php echo $transaction->getTransactionSequence(); ?>]">
+                                <?php $firstLevel = null; ?>
+                                <?php foreach($match->files() as $matchingFile):?>
+                                    <?php if($matchingFile->level()->level() !== $firstLevel): ?>
+                                        <?php if($firstLevel !== null): ?>
+                                            </optgroup>
+                                        <?php endif; ?>
+                                        <optgroup label="<?php echo $matchingFile->level()->level(); ?>">
+                                    <?php endif; ?>
+
+                                    <?php $file = $matchingFile->file(); ?>
+                                    <option value="<?php echo $file->getType()?>_<?php echo $file->getId()?>">
+                                        <?php echo $file->getReference(); ?> (<?php echo price($file->getAmount()); ?> &euro;)
+                                    </option>
+
+                                    <?php $firstLevel = $matchingFile->level()->level(); ?>
+                                <?php endforeach;?>
+                                </optgroup>
+                            </select>
+                            <?php else: ?>
+
+                            <?php echo $langs->trans('codeimportNoMatching'); ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    <input type="submit"/>
+<?php echo $renderer->closingForm(); ?>
