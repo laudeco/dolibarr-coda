@@ -1,6 +1,13 @@
 # CODAIMPORTER FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
 
+This plugin for Dolibarr allows to import CODA files into the accountancy of Dolibarr.
+
 ## Features
+
+- [X]  - Imports CODA files
+- [X]  - Saves the payment into the bank account
+- [ ]  - Lists all the imported coda files
+- [X]  - Marks the invoice, bill, ... as paied
 
 ### Mapping
 A transaction will be mapped 
@@ -69,5 +76,7 @@ From your browser:
   - You should now be able to find and enable the module
 
 
+## Authors
 
+- [@laudeco](https://www.github.com/laudeco)
 
